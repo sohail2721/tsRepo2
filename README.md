@@ -20,10 +20,10 @@ Find out more about Swagger: [https://swagger.io](https://swagger.io)
 Run the following command from your project directory to install the package from npm:
 
 ```bash
-npm install petstore-pkg@6.9.5
+npm install petstore-pkg@6.9.8
 ```
 
-For additional package details, see the [Npm page for the petstore-pkg@6.9.5 npm](https://www.npmjs.com/package/petstore-pkg/v/6.9.5).
+For additional package details, see the [Npm page for the petstore-pkg@6.9.8 npm](https://www.npmjs.com/package/petstore-pkg/v/6.9.8).
 
 ## Test the SDK
 
@@ -43,7 +43,7 @@ npm run test:coverage
 
 ## Initialize the API Client
 
-**_Note:_** Documentation for the client can be found [here.](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/client.md)
+**_Note:_** Documentation for the client can be found [here.](https://www.github.com/sohail2721/tsRepo2/tree/6.9.8/doc/client.md)
 
 The following parameters are configurable for the API Client:
 
@@ -51,10 +51,10 @@ The following parameters are configurable for the API Client:
 |  --- | --- | --- |
 | environment | `Environment` | The API environment. <br> **Default: `Environment.Production`** |
 | timeout | `number` | Timeout for API calls.<br>*Default*: `0` |
-| httpClientOptions | [`Partial<HttpClientOptions>`](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/http-client-options.md) | Stable configurable http client options. |
+| httpClientOptions | [`Partial<HttpClientOptions>`](https://www.github.com/sohail2721/tsRepo2/tree/6.9.8/doc/http-client-options.md) | Stable configurable http client options. |
 | unstableHttpClientOptions | `any` | Unstable configurable http client options. |
-| petstoreAuthCredentials | [`PetstoreAuthCredentials`](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/auth/oauth-2-implicit-grant.md) | The credential object for petstoreAuth |
-| apiKeyCredentials | [`ApiKeyCredentials`](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/auth/custom-header-signature.md) | The credential object for apiKey |
+| petstoreAuthCredentials | [`PetstoreAuthCredentials`](https://www.github.com/sohail2721/tsRepo2/tree/6.9.8/doc/auth/oauth-2-implicit-grant.md) | The credential object for petstoreAuth |
+| apiKeyCredentials | [`ApiKeyCredentials`](https://www.github.com/sohail2721/tsRepo2/tree/6.9.8/doc/auth/custom-header-signature.md) | The credential object for apiKey |
 
 The API client can be initialized as follows:
 
@@ -86,29 +86,29 @@ const client = new Client({
 
 This API uses the following authentication schemes.
 
-* [`petstore_auth (OAuth 2 Implicit Grant)`](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/auth/oauth-2-implicit-grant.md)
-* [`api_key (Custom Header Signature)`](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/auth/custom-header-signature.md)
+* [`petstore_auth (OAuth 2 Implicit Grant)`](https://www.github.com/sohail2721/tsRepo2/tree/6.9.8/doc/auth/oauth-2-implicit-grant.md)
+* [`api_key (Custom Header Signature)`](https://www.github.com/sohail2721/tsRepo2/tree/6.9.8/doc/auth/custom-header-signature.md)
 
 ## List of APIs
 
-* [Pet](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/controllers/pet.md)
-* [Store](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/controllers/store.md)
-* [User](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/controllers/user.md)
+* [Pet](https://www.github.com/sohail2721/tsRepo2/tree/6.9.8/doc/controllers/pet.md)
+* [Store](https://www.github.com/sohail2721/tsRepo2/tree/6.9.8/doc/controllers/store.md)
+* [User](https://www.github.com/sohail2721/tsRepo2/tree/6.9.8/doc/controllers/user.md)
 
 ## SDK Infrastructure
 
 ### Configuration
 
-* [HttpClientOptions](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/http-client-options.md)
-* [RetryConfiguration](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/retry-configuration.md)
-* [ProxySettings](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/proxy-settings.md)
+* [HttpClientOptions](https://www.github.com/sohail2721/tsRepo2/tree/6.9.8/doc/http-client-options.md)
+* [RetryConfiguration](https://www.github.com/sohail2721/tsRepo2/tree/6.9.8/doc/retry-configuration.md)
+* [ProxySettings](https://www.github.com/sohail2721/tsRepo2/tree/6.9.8/doc/proxy-settings.md)
 
 ### HTTP
 
-* [HttpRequest](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/http-request.md)
+* [HttpRequest](https://www.github.com/sohail2721/tsRepo2/tree/6.9.8/doc/http-request.md)
 
 ### Utilities
 
-* [ApiResponse](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/api-response.md)
-* [ApiError](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/api-error.md)
+* [ApiResponse](https://www.github.com/sohail2721/tsRepo2/tree/6.9.8/doc/api-response.md)
+* [ApiError](https://www.github.com/sohail2721/tsRepo2/tree/6.9.8/doc/api-error.md)
 
