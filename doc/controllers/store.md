@@ -5,12 +5,12 @@ Access to Petstore orders
 Find out more about our store: [https://swagger.io](https://swagger.io)
 
 ```ts
-const storeController = new StoreController(client);
+const storeApi = new StoreApi(client);
 ```
 
 ## Class Name
 
-`StoreController`
+`StoreApi`
 
 ## Methods
 
@@ -30,6 +30,10 @@ async getInventory(
 ): Promise<ApiResponse<Record<string, number>>>
 ```
 
+## Authentication
+
+This endpoint requires [api_key](../../doc/auth/custom-header-signature.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -38,13 +42,15 @@ async getInventory(
 
 ## Response Type
 
+**200**: successful operation
+
 This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type `Record<string, number>`.
 
 ## Example Usage
 
 ```ts
 try {
-  const response = await storeController.getInventory();
+  const response = await storeApi.getInventory();
 
   // Extracting fully parsed response body.
   console.log(response.result);
@@ -86,7 +92,7 @@ async placeOrder(
   petId?: bigint,
   quantity?: number,
   shipDate?: string,
-  status?: OrderStatusEnum,
+  status?: OrderStatus,
   complete?: boolean,
   requestOptions?: RequestOptions
 ): Promise<ApiResponse<Order>>
@@ -100,11 +106,13 @@ async placeOrder(
 | `petId` | `bigint \| undefined` | Form, Optional | - |
 | `quantity` | `number \| undefined` | Form, Optional | - |
 | `shipDate` | `string \| undefined` | Form, Optional | - |
-| `status` | [`OrderStatusEnum \| undefined`](../../doc/models/order-status-enum.md) | Form, Optional | Order Status |
+| `status` | [`OrderStatus \| undefined`](../../doc/models/order-status.md) | Form, Optional | Order Status |
 | `complete` | `boolean \| undefined` | Form, Optional | - |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Response Type
+
+**200**: successful operation
 
 This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`Order`](../../doc/models/order.md).
 
@@ -118,7 +126,7 @@ const petId = BigInt(198772);
 const quantity = 7;
 
 try {
-  const response = await storeController.placeOrder(
+  const response = await storeApi.placeOrder(
     id,
     petId,
     quantity
@@ -176,6 +184,8 @@ async getOrderById(
 
 ## Response Type
 
+**200**: successful operation
+
 This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`Order`](../../doc/models/order.md).
 
 ## Example Usage
@@ -184,7 +194,7 @@ This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The 
 const orderId = BigInt(62);
 
 try {
-  const response = await storeController.getOrderById(orderId);
+  const response = await storeApi.getOrderById(orderId);
 
   // Extracting fully parsed response body.
   console.log(response.result);
@@ -238,6 +248,8 @@ async deleteOrder(
 
 ## Response Type
 
+**200**: order deleted
+
 This method returns an [`ApiResponse`](../../doc/api-response.md) instance.
 
 ## Example Usage
@@ -246,7 +258,7 @@ This method returns an [`ApiResponse`](../../doc/api-response.md) instance.
 const orderId = BigInt(62);
 
 try {
-  const response = await storeController.deleteOrder(orderId);
+  const response = await storeApi.deleteOrder(orderId);
 
   // Extracting fully parsed response body.
   console.log(response.result);

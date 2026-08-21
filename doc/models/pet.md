@@ -1,6 +1,8 @@
 
 # Pet
 
+*This model accepts additional fields of type unknown.*
+
 ## Structure
 
 `Pet`
@@ -14,29 +16,41 @@
 | `category` | [`Category \| undefined`](../../doc/models/category.md) | Optional | - |
 | `photoUrls` | `string[]` | Required | - |
 | `tags` | [`Tag[] \| undefined`](../../doc/models/tag.md) | Optional | - |
-| `status` | [`PetStatusEnum \| undefined`](../../doc/models/pet-status-enum.md) | Optional | pet status in the store |
+| `status` | [`PetStatus \| undefined`](../../doc/models/pet-status.md) | Optional | pet status in the store |
+| `additionalProperties` | `Record<string, unknown>` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 120,
-  "name": "name0",
-  "category": {
-    "id": 232,
-    "name": "name2"
-  },
-  "photoUrls": [
-    "photoUrls5",
-    "photoUrls6"
+```ts
+import { Pet, PetStatus } from 'petstore-pkg';
+
+const pet: Pet = {
+  name: 'name0',
+  photoUrls: [
+    'photoUrls5',
+    'photoUrls6'
   ],
-  "tags": [
+  id: BigInt(72),
+  category: {
+    id: BigInt(232),
+    name: 'name2',
+    additionalProperties: {
+      'exampleAdditionalProperty': { 'key1': 'val1', 'key2': 'val2' }
+    },
+  },
+  tags: [
     {
-      "id": 26,
-      "name": "name0"
+      id: BigInt(26),
+      name: 'name0',
+      additionalProperties: {
+        'exampleAdditionalProperty': { 'key1': 'val1', 'key2': 'val2' }
+      },
     }
   ],
-  "status": "available"
-}
+  status: PetStatus.Available,
+  additionalProperties: {
+    'exampleAdditionalProperty': { 'key1': 'val1', 'key2': 'val2' }
+  },
+};
 ```
 

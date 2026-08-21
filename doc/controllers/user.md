@@ -3,17 +3,17 @@
 Operations about user
 
 ```ts
-const userController = new UserController(client);
+const userApi = new UserApi(client);
 ```
 
 ## Class Name
 
-`UserController`
+`UserApi`
 
 ## Methods
 
 * [Create User](../../doc/controllers/user.md#create-user)
-* [Create Users With List Input](../../doc/controllers/user.md#create-users-with-list-input)
+* [Create Users with List Input](../../doc/controllers/user.md#create-users-with-list-input)
 * [Login User](../../doc/controllers/user.md#login-user)
 * [Logout User](../../doc/controllers/user.md#logout-user)
 * [Get User by Name](../../doc/controllers/user.md#get-user-by-name)
@@ -57,6 +57,8 @@ async createUser(
 
 ## Response Type
 
+**200**: successful operation
+
 This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`User`](../../doc/models/user.md).
 
 ## Example Usage
@@ -79,7 +81,7 @@ const phone = '12345';
 const userStatus = 1;
 
 try {
-  const response = await userController.createUser(
+  const response = await userApi.createUser(
     id,
     username,
     firstName,
@@ -118,7 +120,7 @@ try {
 | Default | Unexpected error | `ApiError` |
 
 
-# Create Users With List Input
+# Create Users with List Input
 
 Creates list of users with given input array.
 
@@ -140,6 +142,8 @@ async createUsersWithListInput(
 
 ## Response Type
 
+**200**: Successful operation
+
 This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`User`](../../doc/models/user.md).
 
 ## Example Usage
@@ -151,7 +155,7 @@ const body: User[] = [
 ];
 
 try {
-  const response = await userController.createUsersWithListInput(body);
+  const response = await userApi.createUsersWithListInput(body);
 
   // Extracting fully parsed response body.
   console.log(response.result);
@@ -205,13 +209,15 @@ async loginUser(
 
 ## Response Type
 
+**200**: successful operation
+
 This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type `string`.
 
 ## Example Usage
 
 ```ts
 try {
-  const response = await userController.loginUser();
+  const response = await userApi.loginUser();
 
   // Extracting fully parsed response body.
   console.log(response.result);
@@ -262,13 +268,15 @@ async logoutUser(
 
 ## Response Type
 
+**200**: successful operation
+
 This method returns an [`ApiResponse`](../../doc/api-response.md) instance.
 
 ## Example Usage
 
 ```ts
 try {
-  const response = await userController.logoutUser();
+  const response = await userApi.logoutUser();
 
   // Extracting fully parsed response body.
   console.log(response.result);
@@ -320,6 +328,8 @@ async getUserByName(
 
 ## Response Type
 
+**200**: successful operation
+
 This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`User`](../../doc/models/user.md).
 
 ## Example Usage
@@ -328,7 +338,7 @@ This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The 
 const usersname = 'usersname0';
 
 try {
-  const response = await userController.getUserByName(usersname);
+  const response = await userApi.getUserByName(usersname);
 
   // Extracting fully parsed response body.
   console.log(response.result);
@@ -398,6 +408,8 @@ async updateUser(
 
 ## Response Type
 
+**200**: successful operation
+
 This method returns an [`ApiResponse`](../../doc/api-response.md) instance.
 
 ## Example Usage
@@ -422,7 +434,7 @@ const phone = '12345';
 const userStatus = 1;
 
 try {
-  const response = await userController.updateUser(
+  const response = await userApi.updateUser(
     usersname,
     id,
     username,
@@ -486,6 +498,8 @@ async deleteUser(
 
 ## Response Type
 
+**200**: User deleted
+
 This method returns an [`ApiResponse`](../../doc/api-response.md) instance.
 
 ## Example Usage
@@ -494,7 +508,7 @@ This method returns an [`ApiResponse`](../../doc/api-response.md) instance.
 const usersname = 'usersname0';
 
 try {
-  const response = await userController.deleteUser(usersname);
+  const response = await userApi.deleteUser(usersname);
 
   // Extracting fully parsed response body.
   console.log(response.result);

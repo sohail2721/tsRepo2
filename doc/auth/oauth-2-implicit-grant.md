@@ -9,13 +9,13 @@ Documentation for accessing and setting credentials for petstore_auth.
 
 | Name | Type | Description | Setter |
 |  --- | --- | --- | --- |
-| OAuthClientId | `string` | OAuth 2 Client ID | `oAuthClientId` |
-| OAuthRedirectUri | `string` | OAuth 2 Redirection endpoint or Callback Uri | `oAuthRedirectUri` |
-| OAuthToken | `OAuthToken` | Object for storing information about the OAuth token | `oAuthToken` |
-| OAuthScopes | `OAuthScopePetstoreAuthEnum[]` | List of scopes that apply to the OAuth token | `oAuthScopes` |
-| OAuthClockSkew | `number` | Clock skew time in seconds applied while checking the OAuth Token expiry. | `clockSkew` |
-| OAuthTokenProvider | `(lastOAuthToken: OAuthToken \| undefined, authManager: PetstoreAuthManager) => Promise<OAuthToken>` | Registers a callback for oAuth Token Provider used for automatic token fetching/refreshing. | `oAuthTokenProvider` |
-| OAuthOnTokenUpdate | `(token: OAuthToken) => void` | Registers a callback for token update event. | `oAuthOnTokenUpdate` |
+| oauthClientId | `string` | OAuth 2 Client ID | `oauthClientId` |
+| oauthRedirectUri | `string` | OAuth 2 Redirection endpoint or Callback Uri | `oauthRedirectUri` |
+| oauthToken | `OauthToken` | Object for storing information about the OAuth token | `oauthToken` |
+| oauthScopes | `OauthScopePetstoreAuth[]` | List of scopes that apply to the OAuth token | `oauthScopes` |
+| oauthClockSkew | `number` | Clock skew time in seconds applied while checking the OAuth Token expiry. | `clockSkew` |
+| oauthTokenProvider | `(lastOAuthToken: OauthToken \| undefined, authManager: PetstoreAuthManager) => Promise<OauthToken>` | Registers a callback for oAuth Token Provider used for automatic token fetching/refreshing. | `oauthTokenProvider` |
+| oauthOnTokenUpdate | `(token: OauthToken) => void` | Registers a callback for token update event. | `oauthOnTokenUpdate` |
 
 
 
@@ -51,7 +51,7 @@ The access token must be extracted by the client-side JavaScript code. The acces
 
 ### Scopes
 
-Scopes enable your application to only request access to the resources it needs while enabling users to control the amount of access they grant to your application. Available scopes are defined in the [`OAuthScopePetstoreAuthEnum`](../../doc/models/o-auth-scope-petstore-auth-enum.md) enumeration.
+Scopes enable your application to only request access to the resources it needs while enabling users to control the amount of access they grant to your application. Available scopes are defined in the [`OauthScopePetstoreAuth`](../../doc/models/oauth-scope-petstore-auth.md) enumeration.
 
 | Scope Name | Description |
 |  --- | --- |

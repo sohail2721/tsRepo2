@@ -5,14 +5,13 @@
  */
 
 import { ApiError } from '../core.js';
-import { OAuthProviderErrorEnum } from '../models/oAuthProviderErrorEnum.js';
 
 /**
- * Creates an instance of OAuthProvider
+ * Creates an instance of OauthProvider
  */
-interface OAuthProvider {
+interface OauthProvider {
   /** Gets or sets error code. */
-  error: OAuthProviderErrorEnum;
+  error: OauthProviderError;
   /**
    * Gets or sets human-readable text providing additional information on error.
    * Used to assist the client developer in understanding the error that occurred.
@@ -20,6 +19,7 @@ interface OAuthProvider {
   error_description?: string;
   /** Gets or sets a URI identifying a human-readable web page with information about the error, used to provide the client developer with additional information about the error. */
   error_uri?: string;
+  additionalProperties?: Record<string, unknown>;
 }
 
-export class OAuthProviderError extends ApiError<OAuthProvider> {}
+export class OauthProviderError extends ApiError<OauthProvider> {}

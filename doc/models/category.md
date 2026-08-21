@@ -1,6 +1,8 @@
 
 # Category
 
+*This model accepts additional fields of type unknown.*
+
 ## Structure
 
 `Category`
@@ -11,13 +13,19 @@
 |  --- | --- | --- | --- |
 | `id` | `bigint \| undefined` | Optional | - |
 | `name` | `string \| undefined` | Optional | - |
+| `additionalProperties` | `Record<string, unknown>` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 252,
-  "name": "name8"
-}
+```ts
+import { Category } from 'petstore-pkg';
+
+const category: Category = {
+  id: BigInt(232),
+  name: 'name2',
+  additionalProperties: {
+    'exampleAdditionalProperty': { 'key1': 'val1', 'key2': 'val2' }
+  },
+};
 ```
 

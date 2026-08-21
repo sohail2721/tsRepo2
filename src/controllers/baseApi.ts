@@ -10,7 +10,7 @@ import {
 } from '../clientInterface.js';
 
 /** Base class for all controllers */
-export class BaseController {
+export class BaseApi {
   /** Create a request builder */
   protected createRequest: SdkRequestBuilderFactory;
 

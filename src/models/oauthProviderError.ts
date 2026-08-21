@@ -7,9 +7,9 @@
 import { Schema, stringEnum } from '../schema.js';
 
 /**
- * Enum for OAuthProviderErrorEnum
+ * Enum for OauthProviderError
  */
-export enum OAuthProviderErrorEnum {
+export enum OauthProviderError {
   InvalidRequest = 'invalid_request',
   InvalidClient = 'invalid_client',
   InvalidGrant = 'invalid_grant',
@@ -19,8 +19,8 @@ export enum OAuthProviderErrorEnum {
 }
 
 /**
- * Schema for OAuthProviderErrorEnum
+ * Schema for OauthProviderError
  */
-export const oAuthProviderErrorEnumSchema: Schema<OAuthProviderErrorEnum> = stringEnum(
-  OAuthProviderErrorEnum
+export const oauthProviderErrorSchema: Schema<OauthProviderError> = stringEnum(
+  OauthProviderError
 );

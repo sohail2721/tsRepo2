@@ -6,15 +6,12 @@
 
 import { ApiResponse, RequestOptions } from '../core.js';
 import { Order, orderSchema } from '../models/order.js';
-import {
-  OrderStatusEnum,
-  orderStatusEnumSchema,
-} from '../models/orderStatusEnum.js';
+import { OrderStatus, orderStatusSchema } from '../models/orderStatus.js';
 import { bigint, boolean, dict, number, optional, string } from '../schema.js';
-import { BaseController } from './baseController.js';
+import { BaseApi } from './baseApi.js';
 import { ApiError } from '@apimatic/core';
 
-export class StoreController extends BaseController {
+export class StoreApi extends BaseApi {
   /**
    * Returns a map of status codes to quantities.
    *
@@ -45,7 +42,7 @@ export class StoreController extends BaseController {
     petId?: bigint,
     quantity?: number,
     shipDate?: string,
-    status?: OrderStatusEnum,
+    status?: OrderStatus,
     complete?: boolean,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<Order>> {
@@ -55,7 +52,7 @@ export class StoreController extends BaseController {
       petId: [petId, optional(bigint())],
       quantity: [quantity, optional(number())],
       shipDate: [shipDate, optional(string())],
-      status: [status, optional(orderStatusEnumSchema)],
+      status: [status, optional(orderStatusSchema)],
       complete: [complete, optional(boolean())],
     });
     req.header('Content-Type', 'application/x-www-form-urlencoded');

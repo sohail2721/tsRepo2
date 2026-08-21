@@ -5,35 +5,35 @@
  */
 
 import { isExpired, isValid } from './authentication.js';
-import { OAuthToken } from './models/oAuthToken.js';
-import { OAuthScopePetstoreAuthEnum } from './models/oAuthScopePetstoreAuthEnum.js';
+import { OauthToken } from './models/oauthToken.js';
+import { OauthScopePetstoreAuth } from './models/oauthScopePetstoreAuth.js';
 
 export class PetstoreAuthManager {
-  private _oAuthClientId: string;
-  private _oAuthRedirectUri: string;
-  private _oAuthScopes?: OAuthScopePetstoreAuthEnum[];
-  private _oAuthClockSkew?: number;
+  private _oauthClientId: string;
+  private _oauthRedirectUri: string;
+  private _oauthScopes?: OauthScopePetstoreAuth[];
+  private _oauthClockSkew?: number;
 
   private _baseUri: string;
 
   constructor(
     {
-      oAuthClientId,
-      oAuthRedirectUri,
-      oAuthScopes,
-      oAuthClockSkew,
+      oauthClientId,
+      oauthRedirectUri,
+      oauthScopes,
+      oauthClockSkew,
     }: {
-      oAuthClientId: string;
-      oAuthRedirectUri: string;
-      oAuthScopes?: OAuthScopePetstoreAuthEnum[];
-      oAuthClockSkew?: number;
+      oauthClientId: string;
+      oauthRedirectUri: string;
+      oauthScopes?: OauthScopePetstoreAuth[];
+      oauthClockSkew?: number;
     },
     baseUri: string
   ) {
-    this._oAuthClientId = oAuthClientId;
-    this._oAuthRedirectUri = oAuthRedirectUri;
-    this._oAuthScopes = oAuthScopes;
-    this._oAuthClockSkew = oAuthClockSkew;
+    this._oauthClientId = oauthClientId;
+    this._oauthRedirectUri = oauthRedirectUri;
+    this._oauthScopes = oauthScopes;
+    this._oauthClockSkew = oauthClockSkew;
 
     this._baseUri = baseUri;
   }
@@ -45,9 +45,9 @@ export class PetstoreAuthManager {
     let query = this._baseUri + '/authorize';
     const queryParams: Record<string, string | undefined> = {
       response_type: 'code',
-      client_id: this._oAuthClientId,
-      redirect_uri: this._oAuthRedirectUri,
-      scope: this._oAuthScopes?.join(' '),
+      client_id: this._oauthClientId,
+      redirect_uri: this._oauthRedirectUri,
+      scope: this._oauthScopes?.join(' '),
       state: state,
       ...additionalParams,
     };
@@ -64,11 +64,11 @@ export class PetstoreAuthManager {
       (query.indexOf('?') === -1 ? '?' : '&') + queryString.join('&'));
   }
 
-  public isValid(oAuthToken: OAuthToken | undefined): oAuthToken is OAuthToken {
+  public isValid(oAuthToken: OauthToken | undefined): oAuthToken is OauthToken {
     return isValid(oAuthToken);
   }
 
-  public isExpired(oAuthToken: OAuthToken) {
-    return isExpired(oAuthToken, this._oAuthClockSkew);
+  public isExpired(oAuthToken: OauthToken) {
+    return isExpired(oAuthToken, this._oauthClockSkew);
   }
 }

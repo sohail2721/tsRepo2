@@ -15,22 +15,25 @@ export {
   FileWrapper,
   isFileWrapper,
   ResponseValidationError,
+  LoggerInterface,
+  LogLevel,
+  ConsoleLogger,
 } from './core.js';
 export * from './defaultConfiguration.js';
 export * from './petstoreAuthManager.js';
-export * from './controllers/petController.js';
-export * from './controllers/storeController.js';
-export * from './controllers/userController.js';
+export * from './controllers/petApi.js';
+export * from './controllers/storeApi.js';
+export * from './controllers/userApi.js';
 export { ApiError } from './core.js';
-export * from './errors/oAuthProviderError.js';
+export * from './errors/oauthProviderError.js';
 export type { Category } from './models/category.js';
 export type { MApiResponse } from './models/mApiResponse.js';
-export { OAuthProviderErrorEnum } from './models/oAuthProviderErrorEnum.js';
-export { OAuthScopePetstoreAuthEnum } from './models/oAuthScopePetstoreAuthEnum.js';
-export type { OAuthToken } from './models/oAuthToken.js';
+export { OauthProviderError } from './models/oauthProviderError.js';
+export { OauthScopePetstoreAuth } from './models/oauthScopePetstoreAuth.js';
+export type { OauthToken } from './models/oauthToken.js';
 export type { Order } from './models/order.js';
-export { OrderStatusEnum } from './models/orderStatusEnum.js';
+export { OrderStatus } from './models/orderStatus.js';
 export type { Pet } from './models/pet.js';
-export { PetStatusEnum } from './models/petStatusEnum.js';
+export { PetStatus } from './models/petStatus.js';
 export type { Tag } from './models/tag.js';
 export type { User } from './models/user.js';

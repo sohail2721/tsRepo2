@@ -1,6 +1,8 @@
 
 # Tag
 
+*This model accepts additional fields of type unknown.*
+
 ## Structure
 
 `Tag`
@@ -11,13 +13,19 @@
 |  --- | --- | --- | --- |
 | `id` | `bigint \| undefined` | Optional | - |
 | `name` | `string \| undefined` | Optional | - |
+| `additionalProperties` | `Record<string, unknown>` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 242,
-  "name": "name8"
-}
+```ts
+import { Tag } from 'petstore-pkg';
+
+const tag: Tag = {
+  id: BigInt(168),
+  name: 'name6',
+  additionalProperties: {
+    'exampleAdditionalProperty': { 'key1': 'val1', 'key2': 'val2' }
+  },
+};
 ```
 

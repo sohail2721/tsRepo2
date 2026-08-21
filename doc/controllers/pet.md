@@ -5,12 +5,12 @@ Everything about your Pets
 Find out more: [https://swagger.io](https://swagger.io)
 
 ```ts
-const petController = new PetController(client);
+const petApi = new PetApi(client);
 ```
 
 ## Class Name
 
-`PetController`
+`PetApi`
 
 ## Methods
 
@@ -19,7 +19,7 @@ const petController = new PetController(client);
 * [Find Pets by Status](../../doc/controllers/pet.md#find-pets-by-status)
 * [Find Pets by Tags](../../doc/controllers/pet.md#find-pets-by-tags)
 * [Get Pet by Id](../../doc/controllers/pet.md#get-pet-by-id)
-* [Update Pet With Form](../../doc/controllers/pet.md#update-pet-with-form)
+* [Update Pet with Form](../../doc/controllers/pet.md#update-pet-with-form)
 * [Delete Pet](../../doc/controllers/pet.md#delete-pet)
 * [Upload File](../../doc/controllers/pet.md#upload-file)
 
@@ -35,10 +35,14 @@ async updatePet(
   id?: bigint,
   category?: Category,
   tags?: Tag[],
-  status?: PetStatusEnum,
+  status?: PetStatus,
   requestOptions?: RequestOptions
 ): Promise<ApiResponse<Pet>>
 ```
+
+## Authentication
+
+This endpoint requires [petstore_auth](../../doc/auth/oauth-2-implicit-grant.md)
 
 ## Parameters
 
@@ -49,7 +53,7 @@ async updatePet(
 | `id` | `bigint \| undefined` | Form, Optional | - |
 | `category` | [`Category \| undefined`](../../doc/models/category.md) | Form, Optional | - |
 | `tags` | [`Tag[] \| undefined`](../../doc/models/tag.md) | Form, Optional | - |
-| `status` | [`PetStatusEnum \| undefined`](../../doc/models/pet-status-enum.md) | Form, Optional | pet status in the store |
+| `status` | [`PetStatus \| undefined`](../../doc/models/pet-status.md) | Form, Optional | pet status in the store |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Requires scope
@@ -59,6 +63,8 @@ async updatePet(
 `read:pets`, `write:pets`
 
 ## Response Type
+
+**200**: Successful operation
 
 This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`Pet`](../../doc/models/pet.md).
 
@@ -81,7 +87,7 @@ const tags: Tag[] = [
 ];
 
 try {
-  const response = await petController.updatePet(
+  const response = await petApi.updatePet(
     name,
     photoUrls,
     id,
@@ -131,10 +137,14 @@ async addPet(
   id?: bigint,
   category?: Category,
   tags?: Tag[],
-  status?: PetStatusEnum,
+  status?: PetStatus,
   requestOptions?: RequestOptions
 ): Promise<ApiResponse<Pet>>
 ```
+
+## Authentication
+
+This endpoint requires [petstore_auth](../../doc/auth/oauth-2-implicit-grant.md)
 
 ## Parameters
 
@@ -145,7 +155,7 @@ async addPet(
 | `id` | `bigint \| undefined` | Form, Optional | - |
 | `category` | [`Category \| undefined`](../../doc/models/category.md) | Form, Optional | - |
 | `tags` | [`Tag[] \| undefined`](../../doc/models/tag.md) | Form, Optional | - |
-| `status` | [`PetStatusEnum \| undefined`](../../doc/models/pet-status-enum.md) | Form, Optional | pet status in the store |
+| `status` | [`PetStatus \| undefined`](../../doc/models/pet-status.md) | Form, Optional | pet status in the store |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Requires scope
@@ -155,6 +165,8 @@ async addPet(
 `read:pets`, `write:pets`
 
 ## Response Type
+
+**200**: Successful operation
 
 This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`Pet`](../../doc/models/pet.md).
 
@@ -177,7 +189,7 @@ const tags: Tag[] = [
 ];
 
 try {
-  const response = await petController.addPet(
+  const response = await petApi.addPet(
     name,
     photoUrls,
     id,
@@ -221,16 +233,20 @@ Multiple status values can be provided with comma separated strings.
 
 ```ts
 async findPetsByStatus(
-  status?: PetStatusEnum,
+  status?: PetStatus,
   requestOptions?: RequestOptions
 ): Promise<ApiResponse<Pet[]>>
 ```
+
+## Authentication
+
+This endpoint requires [petstore_auth](../../doc/auth/oauth-2-implicit-grant.md)
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `status` | [`PetStatusEnum \| undefined`](../../doc/models/pet-status-enum.md) | Query, Optional | Status values that need to be considered for filter |
+| `status` | [`PetStatus \| undefined`](../../doc/models/pet-status.md) | Query, Optional | Status values that need to be considered for filter |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Requires scope
@@ -241,13 +257,15 @@ async findPetsByStatus(
 
 ## Response Type
 
+**200**: successful operation
+
 This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`Pet[]`](../../doc/models/pet.md).
 
 ## Example Usage
 
 ```ts
 try {
-  const response = await petController.findPetsByStatus();
+  const response = await petApi.findPetsByStatus();
 
   // Extracting fully parsed response body.
   console.log(response.result);
@@ -289,6 +307,10 @@ async findPetsByTags(
 ): Promise<ApiResponse<Pet[]>>
 ```
 
+## Authentication
+
+This endpoint requires [petstore_auth](../../doc/auth/oauth-2-implicit-grant.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -304,13 +326,15 @@ async findPetsByTags(
 
 ## Response Type
 
+**200**: successful operation
+
 This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`Pet[]`](../../doc/models/pet.md).
 
 ## Example Usage
 
 ```ts
 try {
-  const response = await petController.findPetsByTags();
+  const response = await petApi.findPetsByTags();
 
   // Extracting fully parsed response body.
   console.log(response.result);
@@ -352,6 +376,10 @@ async getPetById(
 ): Promise<ApiResponse<Pet>>
 ```
 
+## Authentication
+
+This endpoint requires [api_key](../../doc/auth/custom-header-signature.md) **OR** [petstore_auth](../../doc/auth/oauth-2-implicit-grant.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -367,6 +395,8 @@ async getPetById(
 
 ## Response Type
 
+**200**: successful operation
+
 This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`Pet`](../../doc/models/pet.md).
 
 ## Example Usage
@@ -375,7 +405,7 @@ This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The 
 const petId = BigInt(10);
 
 try {
-  const response = await petController.getPetById(petId);
+  const response = await petApi.getPetById(petId);
 
   // Extracting fully parsed response body.
   console.log(response.result);
@@ -407,7 +437,7 @@ try {
 | Default | Unexpected error | `ApiError` |
 
 
-# Update Pet With Form
+# Update Pet with Form
 
 Updates a pet resource based on the form data.
 
@@ -419,6 +449,10 @@ async updatePetWithForm(
   requestOptions?: RequestOptions
 ): Promise<ApiResponse<Pet>>
 ```
+
+## Authentication
+
+This endpoint requires [petstore_auth](../../doc/auth/oauth-2-implicit-grant.md)
 
 ## Parameters
 
@@ -437,6 +471,8 @@ async updatePetWithForm(
 
 ## Response Type
 
+**200**: successful operation
+
 This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`Pet`](../../doc/models/pet.md).
 
 ## Example Usage
@@ -445,7 +481,7 @@ This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The 
 const petId = BigInt(10);
 
 try {
-  const response = await petController.updatePetWithForm(petId);
+  const response = await petApi.updatePetWithForm(petId);
 
   // Extracting fully parsed response body.
   console.log(response.result);
@@ -488,6 +524,10 @@ async deletePet(
 ): Promise<ApiResponse<void>>
 ```
 
+## Authentication
+
+This endpoint requires [petstore_auth](../../doc/auth/oauth-2-implicit-grant.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -504,6 +544,8 @@ async deletePet(
 
 ## Response Type
 
+**200**: Pet deleted
+
 This method returns an [`ApiResponse`](../../doc/api-response.md) instance.
 
 ## Example Usage
@@ -512,7 +554,7 @@ This method returns an [`ApiResponse`](../../doc/api-response.md) instance.
 const petId = BigInt(10);
 
 try {
-  const response = await petController.deletePet(petId);
+  const response = await petApi.deletePet(petId);
 
   // Extracting fully parsed response body.
   console.log(response.result);
@@ -556,6 +598,10 @@ async uploadFile(
 ): Promise<ApiResponse<MApiResponse>>
 ```
 
+## Authentication
+
+This endpoint requires [petstore_auth](../../doc/auth/oauth-2-implicit-grant.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -573,6 +619,8 @@ async uploadFile(
 
 ## Response Type
 
+**200**: successful operation
+
 This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`MApiResponse`](../../doc/models/m-api-response.md).
 
 ## Example Usage
@@ -581,7 +629,7 @@ This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The 
 const petId = BigInt(10);
 
 try {
-  const response = await petController.uploadFile(petId);
+  const response = await petApi.uploadFile(petId);
 
   // Extracting fully parsed response body.
   console.log(response.result);

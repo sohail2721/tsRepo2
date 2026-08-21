@@ -8,13 +8,13 @@ import { ApiResponse, FileWrapper, RequestOptions } from '../core.js';
 import { Category, categorySchema } from '../models/category.js';
 import { MApiResponse, mApiResponseSchema } from '../models/mApiResponse.js';
 import { Pet, petSchema } from '../models/pet.js';
-import { PetStatusEnum, petStatusEnumSchema } from '../models/petStatusEnum.js';
+import { PetStatus, petStatusSchema } from '../models/petStatus.js';
 import { Tag, tagSchema } from '../models/tag.js';
 import { array, bigint, optional, string } from '../schema.js';
-import { BaseController } from './baseController.js';
+import { BaseApi } from './baseApi.js';
 import { ApiError } from '@apimatic/core';
 
-export class PetController extends BaseController {
+export class PetApi extends BaseApi {
   /**
    * Update an existing pet by Id.
    *
@@ -32,7 +32,7 @@ export class PetController extends BaseController {
     id?: bigint,
     category?: Category,
     tags?: Tag[],
-    status?: PetStatusEnum,
+    status?: PetStatus,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<Pet>> {
     const req = this.createRequest('PUT', '/pet');
@@ -42,7 +42,7 @@ export class PetController extends BaseController {
       id: [id, optional(bigint())],
       category: [category, optional(categorySchema)],
       tags: [tags, optional(array(tagSchema, { xmlItemName: 'tag' }))],
-      status: [status, optional(petStatusEnumSchema)],
+      status: [status, optional(petStatusSchema)],
     });
     req.header('Content-Type', 'application/x-www-form-urlencoded');
     req.form({
@@ -78,7 +78,7 @@ export class PetController extends BaseController {
     id?: bigint,
     category?: Category,
     tags?: Tag[],
-    status?: PetStatusEnum,
+    status?: PetStatus,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<Pet>> {
     const req = this.createRequest('POST', '/pet');
@@ -88,7 +88,7 @@ export class PetController extends BaseController {
       id: [id, optional(bigint())],
       category: [category, optional(categorySchema)],
       tags: [tags, optional(array(tagSchema, { xmlItemName: 'tag' }))],
-      status: [status, optional(petStatusEnumSchema)],
+      status: [status, optional(petStatusSchema)],
     });
     req.header('Content-Type', 'application/x-www-form-urlencoded');
     req.form({
@@ -113,12 +113,12 @@ export class PetController extends BaseController {
    * @return Response from the API call
    */
   async findPetsByStatus(
-    status?: PetStatusEnum,
+    status?: PetStatus,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<Pet[]>> {
     const req = this.createRequest('GET', '/pet/findByStatus');
     const mapped = req.prepareArgs({
-      status: [status, optional(petStatusEnumSchema)],
+      status: [status, optional(petStatusSchema)],
     });
     req.query('status', mapped.status);
     req.throwOn(400, ApiError, 'Invalid status value');

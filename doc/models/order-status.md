@@ -1,11 +1,11 @@
 
-# Order Status Enum
+# Order Status
 
 Order Status
 
 ## Enumeration
 
-`OrderStatusEnum`
+`OrderStatus`
 
 ## Fields
 
@@ -17,7 +17,9 @@ Order Status
 
 ## Example
 
-```
-approved
+```ts
+import { OrderStatus } from 'petstore-pkg';
+
+const orderStatus = OrderStatus.Approved;
 ```
 

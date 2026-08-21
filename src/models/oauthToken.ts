@@ -7,7 +7,7 @@
 import { bigint, object, optional, Schema, string } from '../schema.js';
 
 /** OAuth 2 Authorization endpoint response */
-export interface OAuthToken {
+export interface OauthToken {
   /** Access token */
   accessToken: string;
   /** Type of access token */
@@ -28,7 +28,7 @@ export interface OAuthToken {
   refreshToken?: string;
 }
 
-export const oAuthTokenSchema: Schema<OAuthToken> = object({
+export const oauthTokenSchema: Schema<OauthToken> = object({
   accessToken: ['access_token', string()],
   tokenType: ['token_type', string()],
   expiresIn: ['expires_in', optional(bigint())],

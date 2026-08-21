@@ -7,10 +7,10 @@
 import { ApiResponse, RequestOptions } from '../core.js';
 import { User, userSchema } from '../models/user.js';
 import { array, bigint, number, optional, string } from '../schema.js';
-import { BaseController } from './baseController.js';
+import { BaseApi } from './baseApi.js';
 import { ApiError } from '@apimatic/core';
 
-export class UserController extends BaseController {
+export class UserApi extends BaseApi {
   /**
    * This can only be done by the logged in user.
    *

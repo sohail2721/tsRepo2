@@ -7,16 +7,16 @@
 import { Schema, stringEnum } from '../schema.js';
 
 /**
- * Enum for OAuthScopePetstoreAuthEnum
+ * Enum for OauthScopePetstoreAuth
  */
-export enum OAuthScopePetstoreAuthEnum {
+export enum OauthScopePetstoreAuth {
   Writepets = 'write:pets',
   Readpets = 'read:pets',
 }
 
 /**
- * Schema for OAuthScopePetstoreAuthEnum
+ * Schema for OauthScopePetstoreAuth
  */
-export const oAuthScopePetstoreAuthEnumSchema: Schema<OAuthScopePetstoreAuthEnum> = stringEnum(
-  OAuthScopePetstoreAuthEnum
+export const oauthScopePetstoreAuthSchema: Schema<OauthScopePetstoreAuth> = stringEnum(
+  OauthScopePetstoreAuth
 );
