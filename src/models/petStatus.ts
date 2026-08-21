@@ -7,17 +7,15 @@
 import { Schema, stringEnum } from '../schema.js';
 
 /**
- * Enum for PetStatusEnum
+ * Enum for PetStatus
  */
-export enum PetStatusEnum {
+export enum PetStatus {
   Available = 'available',
   Pending = 'pending',
   Sold = 'sold',
 }
 
 /**
- * Schema for PetStatusEnum
+ * Schema for PetStatus
  */
-export const petStatusEnumSchema: Schema<PetStatusEnum> = stringEnum(
-  PetStatusEnum
-);
+export const petStatusSchema: Schema<PetStatus> = stringEnum(PetStatus);

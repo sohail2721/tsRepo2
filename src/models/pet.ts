@@ -8,13 +8,14 @@ import {
   array,
   bigint,
   lazy,
-  object,
   optional,
   Schema,
   string,
+  typedExpandoObject,
+  unknown,
 } from '../schema.js';
 import { Category, categorySchema } from './category.js';
-import { PetStatusEnum, petStatusEnumSchema } from './petStatusEnum.js';
+import { PetStatus, petStatusSchema } from './petStatus.js';
 import { Tag, tagSchema } from './tag.js';
 
 export interface Pet {
@@ -24,16 +25,21 @@ export interface Pet {
   photoUrls: string[];
   tags?: Tag[];
   /** pet status in the store */
-  status?: PetStatusEnum;
+  status?: PetStatus;
+  additionalProperties?: Record<string, unknown>;
 }
 
 export const petSchema: Schema<Pet> = lazy(() =>
-  object({
-    id: ['id', optional(bigint())],
-    name: ['name', string()],
-    category: ['category', optional(categorySchema)],
-    photoUrls: ['photoUrls', array(string(), { xmlItemName: 'photoUrl' })],
-    tags: ['tags', optional(array(tagSchema, { xmlItemName: 'tag' }))],
-    status: ['status', optional(petStatusEnumSchema)],
-  })
+  typedExpandoObject(
+    {
+      id: ['id', optional(bigint())],
+      name: ['name', string()],
+      category: ['category', optional(categorySchema)],
+      photoUrls: ['photoUrls', array(string(), { xmlItemName: 'photoUrl' })],
+      tags: ['tags', optional(array(tagSchema, { xmlItemName: 'tag' }))],
+      status: ['status', optional(petStatusSchema)],
+    },
+    'additionalProperties',
+    optional(unknown())
+  )
 );

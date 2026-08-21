@@ -17,8 +17,12 @@ import { Configuration, Environment } from './configuration.js';
 import {
   DEFAULT_CONFIGURATION,
   DEFAULT_RETRY_CONFIG,
+  DEFAULT_LOGGING_OPTIONS,
 } from './defaultConfiguration.js';
+import { ApiLogger, LoggingOptions, mergeLoggingOptions } from './core.js';
 import { ApiError } from './core.js';
+import { setHeader } from './core.js';
+import { updateUserAgent } from './core.js';
 import {
   AbortError,
   AuthenticatorInterface,
@@ -30,13 +34,13 @@ import {
 import { XmlSerialization } from '@apimatic/xml-adapter';
 import { HttpClient } from './clientAdapter.js';
 
-const USER_AGENT = 'APIMATIC 3.0';
-
 export class Client implements ClientInterface {
   private _config: Readonly<Configuration>;
   private _timeout: number;
   private _retryConfig: RetryConfiguration;
+  private _loggingOp: LoggingOptions;
   private _requestBuilderFactory: SdkRequestBuilderFactory;
+  private _userAgent: string;
   public petstoreAuthManager?: PetstoreAuthManager;
 
   constructor(config?: Partial<Configuration>) {
@@ -48,10 +52,19 @@ export class Client implements ClientInterface {
       ...DEFAULT_RETRY_CONFIG,
       ...this._config.httpClientOptions?.retryConfig,
     };
+    this._loggingOp = this._config.logging
+      ? mergeLoggingOptions(this._config.logging ?? {})
+      : mergeLoggingOptions(
+          this._config.logging ?? {},
+          DEFAULT_LOGGING_OPTIONS
+        );
     this._timeout =
       typeof this._config.httpClientOptions?.timeout != 'undefined'
         ? this._config.httpClientOptions.timeout
         : this._config.timeout;
+    this._userAgent = updateUserAgent(
+      'TypeScript-SDK/9.8.7 (OS: {os-info}, Engine: {engine}/{engine-version})'
+    );
     this._requestBuilderFactory = createRequestHandlerFactory(
       (server) => getBaseUri(server, this._config),
       createAuthProviderFromConfig(
@@ -65,9 +78,14 @@ export class Client implements ClientInterface {
         httpsAgent: this._config.httpClientOptions?.httpsAgent,
         proxySettings: this._config.httpClientOptions?.proxySettings,
       }),
-      [withErrorHandlers, withUserAgent, withAuthenticationByDefault],
+      [
+        withErrorHandlers,
+        withUserAgent(this._userAgent),
+        withAuthenticationByDefault,
+      ],
       this._retryConfig,
-      new XmlSerialization()
+      new XmlSerialization(),
+      this._loggingOp
     );
     if (this._config.petstoreAuthCredentials) {
       this.petstoreAuthManager = new PetstoreAuthManager(
@@ -86,6 +104,28 @@ export class Client implements ClientInterface {
    */
   public withConfiguration(config: Partial<Configuration>) {
     return new Client({ ...this._config, ...config });
+  }
+
+  /**
+   * Create a client instance from a JSON configuration string
+   * @param jsonConfig - JSON string containing the configuration
+   * @returns A new Client instance
+   */
+  public static fromJsonConfig(jsonConfig: string): Client {
+    return new Client(Configuration.fromJsonConfig(jsonConfig));
+  }
+
+  /**
+   * Create a client instance from environment variables
+   * @param envVariables - Optional object containing environment variables
+   * @returns A new Client instance
+   */
+  public static fromEnvironment(
+    envVariables?: Record<string, string | undefined>
+  ): Client {
+    return new Client(
+      Configuration.fromEnvironment(envVariables || process.env)
+    );
   }
 }
 
@@ -113,7 +153,8 @@ function createRequestHandlerFactory(
   httpClient: HttpClient,
   addons: ((rb: SdkRequestBuilder) => void)[],
   retryConfig: RetryConfiguration,
-  xmlSerializer: XmlSerializerInterface
+  xmlSerializer: XmlSerializerInterface,
+  loggingOptions: LoggingOptions
 ): SdkRequestBuilderFactory {
   const requestBuilderFactory = createRequestBuilderFactory(
     createHttpClientAdapter(httpClient),
@@ -121,7 +162,8 @@ function createRequestHandlerFactory(
     ApiError,
     authProvider,
     retryConfig,
-    xmlSerializer
+    xmlSerializer,
+    new ApiLogger(loggingOptions)
   );
 
   return tap(requestBuilderFactory, ...addons);
@@ -142,8 +184,14 @@ function withErrorHandlers(rb: SdkRequestBuilder) {
   rb.defaultToError(ApiError);
 }
 
-function withUserAgent(rb: SdkRequestBuilder) {
-  rb.header('user-agent', USER_AGENT);
+function withUserAgent(userAgent: string) {
+  return (rb: SdkRequestBuilder) => {
+    rb.interceptRequest((request) => {
+      const headers = request.headers ?? {};
+      setHeader(headers, 'user-agent', userAgent);
+      return { ...request, headers };
+    });
+  };
 }
 
 function withAuthenticationByDefault(rb: SdkRequestBuilder) {

@@ -1,6 +1,8 @@
 
 # M Api Response
 
+*This model accepts additional fields of type unknown.*
+
 ## Structure
 
 `MApiResponse`
@@ -12,14 +14,20 @@
 | `code` | `number \| undefined` | Optional | - |
 | `type` | `string \| undefined` | Optional | - |
 | `message` | `string \| undefined` | Optional | - |
+| `additionalProperties` | `Record<string, unknown>` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "code": 142,
-  "type": "type0",
-  "message": "message0"
-}
+```ts
+import { MApiResponse } from 'petstore-pkg';
+
+const apiResponse: MApiResponse = {
+  code: 146,
+  type: 'type4',
+  message: 'message4',
+  additionalProperties: {
+    'exampleAdditionalProperty': { 'key1': 'val1', 'key2': 'val2' }
+  },
+};
 ```
 

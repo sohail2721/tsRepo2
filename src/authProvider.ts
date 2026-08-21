@@ -11,7 +11,7 @@ import {
   requestAuthenticationProvider,
 } from './authentication.js';
 import { Configuration } from './configuration.js';
-import { OAuthToken } from './models/oAuthToken.js';
+import { OauthToken } from './models/oauthToken.js';
 import { PetstoreAuthManager } from './petstoreAuthManager.js';
 
 export function createAuthProviderFromConfig(
@@ -22,14 +22,14 @@ export function createAuthProviderFromConfig(
     petstoreAuth:
       config.petstoreAuthCredentials &&
       requestAuthenticationProvider(
-        config.petstoreAuthCredentials.oAuthToken,
+        config.petstoreAuthCredentials.oauthToken,
         petstoreAuthTokenProvider(
           petstoreAuth,
-          config.petstoreAuthCredentials.oAuthTokenProvider
+          config.petstoreAuthCredentials.oauthTokenProvider
         ),
-        config.petstoreAuthCredentials.oAuthOnTokenUpdate,
+        config.petstoreAuthCredentials.oauthOnTokenUpdate,
         {
-          clockSkew: config.petstoreAuthCredentials.oAuthClockSkew,
+          clockSkew: config.petstoreAuthCredentials.oauthClockSkew,
         } as OAuthConfiguration
       ),
     apiKey:
@@ -47,15 +47,15 @@ function petstoreAuthTokenProvider(
   petstoreAuth: () => PetstoreAuthManager | undefined,
   defaultProvider:
     | ((
-        lastOAuthToken: OAuthToken | undefined,
+        lastOAuthToken: OauthToken | undefined,
         authManager: PetstoreAuthManager
-      ) => Promise<OAuthToken>)
+      ) => Promise<OauthToken>)
     | undefined
-): ((token: OAuthToken | undefined) => Promise<OAuthToken>) | undefined {
+): ((token: OauthToken | undefined) => Promise<OauthToken>) | undefined {
   if (defaultProvider === undefined) {
     return undefined;
   }
-  return (token: OAuthToken | undefined) => {
+  return (token: OauthToken | undefined) => {
     const manager = petstoreAuth();
     if (manager === undefined) {
       throw Error('Unable to find the OAuthManager instance');

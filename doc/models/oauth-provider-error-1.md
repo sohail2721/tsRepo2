@@ -1,11 +1,11 @@
 
-# O Auth Provider Error Enum
+# Oauth Provider Error
 
 OAuth 2 Authorization error codes
 
 ## Enumeration
 
-`OAuthProviderErrorEnum`
+`OauthProviderError`
 
 ## Fields
 
@@ -17,4 +17,12 @@ OAuth 2 Authorization error codes
 | `UnauthorizedClient` | The authenticated client is not authorized to use this authorization grant type. |
 | `UnsupportedGrantType` | The authorization grant type is not supported by the authorization server. |
 | `InvalidScope` | The requested scope is invalid, unknown, malformed, or exceeds the scope granted by the resource owner. |
+
+## Example
+
+```ts
+import { OauthProviderError } from 'petstore-pkg';
+
+const oauthProviderError = OauthProviderError.UnsupportedGrantType;
+```
 

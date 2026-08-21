@@ -20,95 +20,149 @@ Find out more about Swagger: [https://swagger.io](https://swagger.io)
 Run the following command from your project directory to install the package from npm:
 
 ```bash
-npm install petstore-pkg@6.9.5
+npm install petstore-pkg@9.8.7
 ```
 
-For additional package details, see the [Npm page for the petstore-pkg@6.9.5 npm](https://www.npmjs.com/package/petstore-pkg/v/6.9.5).
-
-## Test the SDK
-
-To validate the functionality of this SDK, you can execute all tests located in the `test` directory. This SDK utilizes `Jest` as both the testing framework and test runner.
-
-To run the tests, navigate to the root directory of the SDK and execute the following command:
-
-```bash
-npm run test
-```
-
-Or you can also run tests with coverage report:
-
-```bash
-npm run test:coverage
-```
+For additional package details, see the [Npm page for the petstore-pkg@9.8.7 npm](https://www.npmjs.com/package/petstore-pkg/v/9.8.7).
 
 ## Initialize the API Client
 
-**_Note:_** Documentation for the client can be found [here.](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/client.md)
+**_Note:_** Documentation for the client can be found [here.](doc/client.md)
 
 The following parameters are configurable for the API Client:
 
 | Parameter | Type | Description |
 |  --- | --- | --- |
-| environment | `Environment` | The API environment. <br> **Default: `Environment.Production`** |
-| timeout | `number` | Timeout for API calls.<br>*Default*: `0` |
-| httpClientOptions | [`Partial<HttpClientOptions>`](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/http-client-options.md) | Stable configurable http client options. |
+| environment | [`Environment`](README.md#environments) | The API environment. <br> **Default: `Environment.Production`** |
+| timeout | `number` | Timeout for API calls.<br>*Default*: `30000` |
+| httpClientOptions | [`Partial<HttpClientOptions>`](doc/http-client-options.md) | Stable configurable http client options. |
 | unstableHttpClientOptions | `any` | Unstable configurable http client options. |
-| petstoreAuthCredentials | [`PetstoreAuthCredentials`](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/auth/oauth-2-implicit-grant.md) | The credential object for petstoreAuth |
-| apiKeyCredentials | [`ApiKeyCredentials`](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/auth/custom-header-signature.md) | The credential object for apiKey |
+| logging | [`PartialLoggingOptions`](doc/partial-logging-options.md) | Logging Configuration to enable logging |
+| petstoreAuthCredentials | [`PetstoreAuthCredentials`](doc/auth/oauth-2-implicit-grant.md) | The credential object for petstoreAuth |
+| apiKeyCredentials | [`ApiKeyCredentials`](doc/auth/custom-header-signature.md) | The credential object for apiKey |
 
 The API client can be initialized as follows:
+
+### Code-Based Client Initialization
 
 ```ts
 import {
   Client,
   Environment,
-  OAuthScopePetstoreAuthEnum,
+  LogLevel,
+  OauthScopePetstoreAuth,
 } from 'petstore-pkg';
 
 const client = new Client({
   petstoreAuthCredentials: {
-    oAuthClientId: 'OAuthClientId',
-    oAuthRedirectUri: 'OAuthRedirectUri',
-    oAuthScopes: [
-      OAuthScopePetstoreAuthEnum.Writepets,
-      OAuthScopePetstoreAuthEnum.Readpets
+    oauthClientId: 'OAuthClientId',
+    oauthRedirectUri: 'OAuthRedirectUri',
+    oauthScopes: [
+      OauthScopePetstoreAuth.Writepets,
+      OauthScopePetstoreAuth.Readpets
     ]
   },
   apiKeyCredentials: {
     'api_key': 'api_key'
   },
-  timeout: 0,
+  timeout: 30000,
   environment: Environment.Production,
+  logging: {
+    logLevel: LogLevel.Info,
+    logRequest: {
+      logBody: true
+    },
+    logResponse: {
+      logHeaders: true
+    }
+  },
 });
 ```
+
+### Configuration-Based Client Initialization
+
+```ts
+import * as path from 'path';
+import * as fs from 'fs';
+import { Client } from 'petstore-pkg';
+
+// Provide absolute path for the configuration file
+const absolutePath = path.resolve('./config.json');
+
+// Read the configuration file content
+const fileContent = fs.readFileSync(absolutePath, 'utf-8');
+
+// Initialize client from JSON configuration content
+const client = Client.fromJsonConfig(fileContent);
+```
+
+See the [Configuration-Based Client Initialization](doc/configuration-based-client-initialization.md) section for details.
+
+### Environment-Based Client Initialization
+
+```ts
+import * as dotenv from 'dotenv';
+import * as path from 'path';
+import * as fs from 'fs';
+import { Client } from 'petstore-pkg';
+
+// Optional - Provide absolute path for the .env file
+const absolutePath = path.resolve('./.env');
+
+if (fs.existsSync(absolutePath)) {
+  // Load environment variables from .env file
+  dotenv.config({ path: absolutePath, override: true });
+}
+
+// Initialize client using environment variables
+const client = Client.fromEnvironment(process.env);
+```
+
+See the [Environment-Based Client Initialization](doc/environment-based-client-initialization.md) section for details.
+
+## Environments
+
+The SDK can be configured to use a different environment for making API calls. Available environments are:
+
+### Fields
+
+| Name | Description |
+|  --- | --- |
+| Production | **Default** |
 
 ## Authorization
 
 This API uses the following authentication schemes.
 
-* [`petstore_auth (OAuth 2 Implicit Grant)`](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/auth/oauth-2-implicit-grant.md)
-* [`api_key (Custom Header Signature)`](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/auth/custom-header-signature.md)
+* [`petstore_auth (OAuth 2 Implicit Grant)`](doc/auth/oauth-2-implicit-grant.md)
+* [`api_key (Custom Header Signature)`](doc/auth/custom-header-signature.md)
 
 ## List of APIs
 
-* [Pet](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/controllers/pet.md)
-* [Store](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/controllers/store.md)
-* [User](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/controllers/user.md)
+* [Pet](doc/controllers/pet.md)
+* [Store](doc/controllers/store.md)
+* [User](doc/controllers/user.md)
 
 ## SDK Infrastructure
 
 ### Configuration
 
-* [HttpClientOptions](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/http-client-options.md)
-* [RetryConfiguration](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/retry-configuration.md)
-* [ProxySettings](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/proxy-settings.md)
+* [HttpClientOptions](doc/http-client-options.md)
+* [RetryConfiguration](doc/retry-configuration.md)
+* [ProxySettings](doc/proxy-settings.md)
+* [Configuration-Based Client Initialization](doc/configuration-based-client-initialization.md)
+* [Environment-Based Client Initialization](doc/environment-based-client-initialization.md)
+* [PartialLoggingOptions](doc/partial-logging-options.md)
+* [PartialRequestLoggingOptions](doc/partial-request-logging-options.md)
+* [PartialResponseLoggingOptions](doc/partial-response-logging-options.md)
+* [LoggerInterface](doc/logger-interface.md)
 
 ### HTTP
 
-* [HttpRequest](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/http-request.md)
+* [HttpRequest](doc/http-request.md)
 
 ### Utilities
 
-* [ApiResponse](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/api-response.md)
-* [ApiError](https://www.github.com/sohail2721/tsRepo2/tree/6.9.5/doc/api-error.md)
+* [ApiResponse](doc/api-response.md)
+* [ApiError](doc/api-error.md)
 

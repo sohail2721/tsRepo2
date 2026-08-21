@@ -8,12 +8,13 @@ import {
   bigint,
   boolean,
   number,
-  object,
   optional,
   Schema,
   string,
+  typedExpandoObject,
+  unknown,
 } from '../schema.js';
-import { OrderStatusEnum, orderStatusEnumSchema } from './orderStatusEnum.js';
+import { OrderStatus, orderStatusSchema } from './orderStatus.js';
 
 export interface Order {
   id?: bigint;
@@ -21,15 +22,20 @@ export interface Order {
   quantity?: number;
   shipDate?: string;
   /** Order Status */
-  status?: OrderStatusEnum;
+  status?: OrderStatus;
   complete?: boolean;
+  additionalProperties?: Record<string, unknown>;
 }
 
-export const orderSchema: Schema<Order> = object({
-  id: ['id', optional(bigint())],
-  petId: ['petId', optional(bigint())],
-  quantity: ['quantity', optional(number())],
-  shipDate: ['shipDate', optional(string())],
-  status: ['status', optional(orderStatusEnumSchema)],
-  complete: ['complete', optional(boolean())],
-});
+export const orderSchema: Schema<Order> = typedExpandoObject(
+  {
+    id: ['id', optional(bigint())],
+    petId: ['petId', optional(bigint())],
+    quantity: ['quantity', optional(number())],
+    shipDate: ['shipDate', optional(string())],
+    status: ['status', optional(orderStatusSchema)],
+    complete: ['complete', optional(boolean())],
+  },
+  'additionalProperties',
+  optional(unknown())
+);

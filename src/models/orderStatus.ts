@@ -7,17 +7,15 @@
 import { Schema, stringEnum } from '../schema.js';
 
 /**
- * Enum for OrderStatusEnum
+ * Enum for OrderStatus
  */
-export enum OrderStatusEnum {
+export enum OrderStatus {
   Placed = 'placed',
   Approved = 'approved',
   Delivered = 'delivered',
 }
 
 /**
- * Schema for OrderStatusEnum
+ * Schema for OrderStatus
  */
-export const orderStatusEnumSchema: Schema<OrderStatusEnum> = stringEnum(
-  OrderStatusEnum
-);
+export const orderStatusSchema: Schema<OrderStatus> = stringEnum(OrderStatus);
